@@ -1,3 +1,4 @@
+.idea/**
 out/**
 
 .pdf-generator-test.yaml
