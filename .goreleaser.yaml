@@ -23,6 +23,7 @@ archives:
       - goos: windows
         format: zip
     files:
+      - resources/*
       - .pdf-generator.yaml
       - README.md
 checksum:

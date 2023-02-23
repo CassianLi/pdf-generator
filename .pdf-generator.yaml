@@ -1,5 +1,7 @@
 port: 7006
 
+# wkhtmltopdf path, if null will looking in the PATH and PATHEXT environment dirs
+wkhtmltopdf-path: /usr/local/bin/wkhtmltopdf
 # tmp dir
 tmp-dir: /tmp
 mysql:

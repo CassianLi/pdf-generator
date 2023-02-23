@@ -2,11 +2,16 @@ package utils
 
 import (
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
+	"github.com/spf13/viper"
 	"strings"
 )
 
 // GeneratePageToPDF Generates PDF file from html page string
 func GeneratePageToPDF(pg string, savePath string) (err error) {
+	wkhtmltopdfPath := viper.GetString("wkhtmltopdf-path")
+	if wkhtmltopdfPath != "" {
+		wkhtmltopdf.SetPath(wkhtmltopdfPath)
+	}
 	// Client code
 	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
