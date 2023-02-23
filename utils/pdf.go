@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 	"github.com/spf13/viper"
 	"strings"
@@ -10,6 +11,7 @@ import (
 func GeneratePageToPDF(pg string, savePath string) (err error) {
 	wkhtmltopdfPath := viper.GetString("wkhtmltopdf-path")
 	if wkhtmltopdfPath != "" {
+		fmt.Println("Set wkhtmltopdf path to", wkhtmltopdfPath)
 		wkhtmltopdf.SetPath(wkhtmltopdfPath)
 	}
 	// Client code

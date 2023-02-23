@@ -1,6 +1,35 @@
 # Getting Started
 
-当前项目通过启动`web`服务，来提供动态生成PDF文件的接口服务。
+当前项目通过启动`web`服务，来提供动态生成PDF文件的接口服务。使用
+[go-wkhtmltopdf](github.com/SebastiaanKlippert/go-wkhtmltopdf)来制作`PDF`文件,
+需要在目标机器上安装[wkhtmltopdf]( http://wkhtmltopdf.org/index.html )命令。
+
+## 安装`wkhtmltopdf` **CentOS** 为例
+
+首先安装依赖库
+```shell
+yum install fontconfig libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1
+yum install openssl
+```
+
+
+下载最新版本`wkhtmltopdf`的二进制文件并安装
+
+```shell
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos7.x86_64.rpm
+
+rpm -ivh wkhtmltox-0.12.6-1.centos7.x86_64.rpm 
+```
+测试命令
+```shell
+whereis wkhtmltopdf
+
+# wkhtmltopdf: /usr/local/bin/wkhtmltopdf
+
+/usr/local/bin/wkhtmltopdf www.google.com a.pdf
+```
+
+
 
 ## 配置文件`.pdf-generator.yaml`
 
