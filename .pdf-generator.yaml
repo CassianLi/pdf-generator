@@ -1,0 +1,13 @@
+port: 7006
+
+# tmp dir
+tmp-dir: /tmp
+mysql:
+  driver: mysql
+  url: 'USERNAME:PASSWORD@tcp(HOST:PORT)/DATABASE'
+  # connection max life time: default 3 minutes
+  max-life-time: 3
+  # max open connections: default 10
+  max-open-connections: 10
+  # max idle connections: default 10
+  max-idle-connections: 10
