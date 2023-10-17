@@ -39,6 +39,8 @@ func Server() {
 
 	e.GET("/vatNoteBe/:customsId", route.VatNoteForBe)
 
+	e.GET("/transfer/:customsId", route.TransferDocBe)
+
 	e.GET("/generatePdf/:viewType/:customsId", route.GeneratePdf)
 
 	port := viper.GetString("port")

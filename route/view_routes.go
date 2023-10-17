@@ -25,6 +25,20 @@ func VatNoteForBe(c echo.Context) error {
 	return c.Render(http.StatusOK, "vat-note.html", viewModel)
 }
 
+func TransferDocBe(c echo.Context) error {
+	customsId := c.Param("customsId")
+	if customsId == "" {
+		return c.JSON(http.StatusBadRequest, "The customs' ID is required.")
+	}
+	viewModel, err := service.QueryVatNotViewModel(customsId)
+	if err != nil {
+		println("errors :", err.Error())
+		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("The customs' ID %s canot query view model.", customsId))
+	}
+
+	return c.Render(http.StatusOK, "transfer-doc.html", viewModel)
+}
+
 func GeneratePdf(c echo.Context) error {
 	customsId := c.Param("customsId")
 	viewType := c.Param("viewType")
@@ -38,7 +52,20 @@ func GeneratePdf(c echo.Context) error {
 		println("errors :", err.Error())
 		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("The customs' ID %s canot query view model.", customsId))
 	}
-	pg, err := utils.ParseTemplate("resources/vat-note.html", viewModel)
+	var resourcePath string
+	if viewType == "vatNote" {
+		resourcePath = "resources/vat-note.html"
+	}
+
+	if viewType == "transferDoc" {
+		resourcePath = "resources/transfer-doc.html"
+	}
+
+	if resourcePath == "" {
+		return c.JSON(http.StatusBadRequest, "The view type is not supported.")
+	}
+
+	pg, err := utils.ParseTemplate(resourcePath, viewModel)
 
 	if err != nil {
 		println("Parse html template, errors :", err.Error())
