@@ -23,7 +23,7 @@ WHERE process_code = 'TAX'
 
 	// QueryCustomsImporterAddressSql Query importer address
 	QueryCustomsImporterAddressSql = `
-	SELECT ba.company_abbr AS company_name,
+	SELECT ba.company_or_name AS company_name,
        ba.country,
        ba.state,
        ba.city,
@@ -35,7 +35,7 @@ FROM base_customs bc
 WHERE bc.customs_id = ?`
 
 	// QueryDeliveryAddressSql Query delivery address
-	QueryDeliveryAddressSql = `SELECT ba.company_abbr AS company_name,
+	QueryDeliveryAddressSql = `SELECT ba.company_or_name AS company_name,
        ba.country,
        ba.state,
        ba.city,
