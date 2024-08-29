@@ -14,6 +14,27 @@ FROM base_customs_tax bct
          INNER JOIN base_description bd ON sca.product_no = bd.product_no AND sca.country = bd.country
 WHERE bct.tax_type='A00' and bct.customs_id = ?;`
 
+	// QueryCustomsHasSplitSql 查询指定的customs_id是否是拆分报关
+	QueryCustomsHasSplitSql = `
+SELECT has_split
+FROM stats_customs_info
+WHERE  customs_id = ?;`
+
+	// QueryCustomsSplitTaxSql 查询拆分报关的税金信息
+	QueryCustomsSplitTaxSql = `SELECT sca.item_number,
+       sca.quantity,
+       bd.description,
+       bct.tax_type,
+       bct.tax_rate,
+       bct.tax_fee,
+       bct.declared_amount
+FROM base_customs_tax bct
+         INNER JOIN service_customs_supply_article scsa ON bct.customs_id = scsa.customs_id AND bct.itemnr = scsa.item
+         INNER JOIN service_customs_article sca ON scsa.article_id = sca.id
+         INNER JOIN base_description bd ON sca.product_no = bd.product_no AND sca.country = bd.country
+WHERE bct.tax_type = 'A00'
+  AND bct.customs_id = ?;`
+
 	// QueryCustomsStatusTimeSql 查询税金单时间
 	QueryCustomsStatusTimeSql = `SELECT customs_id,
        gmt_create AS status_date

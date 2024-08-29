@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	global "pdf-generator/config"
 	"pdf-generator/model"
 )
@@ -20,7 +21,20 @@ func QueryCustomsStatusDateForTax(customsId string) (customsStatusDate model.Cus
 
 // QueryCustomsTaxList Query tax list of customs
 func QueryCustomsTaxList(customsId string) (customsTaxList []model.CustomsTax, err error) {
-	err = global.Db.Select(&customsTaxList, QueryCustomsTaxSql, customsId)
+	// 1. 判断是否是拆分报关
+	var hasSplit bool
+	err = global.Db.Get(&hasSplit, QueryCustomsHasSplitSql, customsId)
+	if err != nil {
+		fmt.Printf("Query customs has_split error, continue to make as no-split. %v\n", err)
+	}
+
+	// 2. 选择SQL语句
+	sql := QueryCustomsTaxSql
+	if hasSplit {
+		sql = QueryCustomsSplitTaxSql
+	}
+
+	err = global.Db.Select(&customsTaxList, sql, customsId)
 	return customsTaxList, err
 }
 
